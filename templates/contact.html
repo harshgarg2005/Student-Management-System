@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="page-title">Contact AU Future Skills Academy</h1>
+
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="card h-100">
+        <div class="card-body p-4">
+          <h2 class="section-title">Reach Out to Us</h2>
+          <p class="text-muted small">Official contact information for AU Future Skills Academy by Ambuja.</p>
+          <ul class="list-unstyled mb-4">
+            <li class="mb-2"><strong>Address:</strong> AU Future Skills Academy Campus</li>
+            <li class="mb-2"><strong>Phone:</strong> +91-98765-43210</li>
+            <li class="mb-2"><strong>Email:</strong> contact@aufutureskills.academy</li>
+          </ul>
+          <h3 class="h6 fw-bold mb-2">Social</h3>
+          <ul class="list-unstyled mb-0">
+            <li><a href="#" target="_blank">Facebook</a></li>
+            <li><a href="#" target="_blank">Instagram</a></li>
+            <li><a href="#" target="_blank">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="card">
+        <div class="card-header">Feedback</div>
+        <div class="card-body">
+          <p class="text-muted small mb-3">Feedback is stored in the database for export or analysis.</p>
+          <form action="{{ url_for('feedback') }}" method="post">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name (optional)</label>
+              <input type="text" class="form-control" id="name" name="name" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email (optional)</label>
+              <input type="email" class="form-control" id="email" name="email" />
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Message *</label>
+              <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary rounded-pill px-4">Submit Feedback</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="auth-wrapper fade-in-up">
+    <div class="card auth-card border-0 shadow-lg" style="background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05);">
+      <div class="card-body p-5">
+        <div class="text-center mb-4">
+          <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3" style="width: 64px; height: 64px;">
+            <i class="bi bi-person-circle fs-1"></i>
+          </div>
+          <h1 class="h3 fw-bold mb-1">Welcome Back</h1>
+          <p class="auth-hint text-muted">Sign in to access student and teacher data.</p>
+        </div>
+        
+        <form method="post" action="{{ url_for('login') }}">
+          <div class="mb-4">
+            <label for="username" class="form-label text-light fw-medium">Username or Email</label>
+            <input type="text" class="form-control bg-transparent text-light border-secondary py-2" id="username" name="username" required autofocus placeholder="Enter your username" />
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label for="password" class="form-label text-light fw-medium mb-0">Password</label>
+              <a href="{{ url_for('forgot_password') }}" class="text-primary text-decoration-none small">Forgot password?</a>
+            </div>
+            <input type="password" class="form-control bg-transparent text-light border-secondary py-2" id="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+          </div>
+          <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm mb-4" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; font-weight: 500;">
+            Log in to Dashboard
+          </button>
+        </form>
+        
+        <div class="text-center mt-2 pt-3 border-top border-secondary border-opacity-25">
+          <p class="auth-footer text-muted mb-0">First time here? <a href="{{ url_for('setup') }}" class="text-primary fw-medium text-decoration-none">Create admin account</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

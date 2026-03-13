@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+    <h1 class="page-title mb-0">Profile</h1>
+    <a class="btn btn-outline-primary rounded-pill px-4" href="{{ url_for('change_password') }}">Change password</a>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">Profile details</div>
+        <div class="card-body">
+          <form method="post" action="{{ url_for('profile_update') }}">
+            <div class="mb-3">
+              <label class="form-label" for="full_name">Full name</label>
+              <input class="form-control" id="full_name" name="full_name" value="{{ profile.full_name or '' }}" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="email">Email (for OTP reset)</label>
+              <input class="form-control" id="email" name="email" type="email" value="{{ profile.email or '' }}" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="phone">Phone</label>
+              <input class="form-control" id="phone" name="phone" value="{{ profile.phone or '' }}" />
+            </div>
+            <button class="btn btn-primary rounded-pill px-4" type="submit">Update profile</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">Account</div>
+        <div class="card-body">
+          <div class="mb-2"><span class="text-muted small">Username</span><div class="fw-semibold">{{ current_user.username }}</div></div>
+          <div class="mb-2"><span class="text-muted small">Role</span><div class="fw-semibold">{{ current_user.role }}</div></div>
+          <div class="mb-0"><span class="text-muted small">Created</span><div class="fw-semibold">{{ current_user.created_at }}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

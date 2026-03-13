@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4 fade-in-up">
+    <h1 class="page-title mb-0">Teacher Data</h1>
+  </div>
+
+  <div class="row g-4 mb-5 fade-in-up stagger-1">
+    <div class="col-12">
+      <div class="card border-0">
+        <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 fw-bold">Add Teacher</h5>
+          <span class="badge bg-secondary-soft text-secondary rounded-pill"><i class="bi bi-person-badge me-1"></i> New Entry</span>
+        </div>
+        <div class="card-body p-4">
+          <form action="{{ url_for('add_teacher') }}" method="post">
+            <div class="row g-4">
+              <div class="col-md-4">
+                <label for="department_id" class="form-label">Department ID</label>
+                <input type="number" class="form-control bg-transparent text-light" id="department_id" name="department_id" placeholder="e.g. 1" />
+              </div>
+              <div class="col-md-4">
+                <label for="teacher_name" class="form-label">Teacher Name *</label>
+                <input type="text" class="form-control bg-transparent" id="teacher_name" name="teacher_name" required placeholder="Jane Smith" />
+              </div>
+              <div class="col-md-4">
+                <label for="qualification" class="form-label">Qualification</label>
+                <select class="form-select bg-transparent text-light" id="qualification" name="qualification">
+                  <option class="text-dark" value="">Select</option>
+                  <option class="text-dark" value="B.Ed">B.Ed</option>
+                  <option class="text-dark" value="M.Ed">M.Ed</option>
+                  <option class="text-dark" value="M.Sc">M.Sc</option>
+                  <option class="text-dark" value="PhD">PhD</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" class="form-control bg-transparent" id="subject" name="subject" placeholder="e.g. Maths, Physics" />
+              </div>
+              <div class="col-md-4">
+                <label for="experience" class="form-label">Experience (years)</label>
+                <input type="number" step="1" class="form-control bg-transparent text-light" id="experience" name="experience" placeholder="e.g. 5" />
+              </div>
+              <div class="col-md-4">
+                <label for="salary" class="form-label">Salary *</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent border-secondary text-muted">₹</span>
+                  <input type="number" step="0.01" class="form-control bg-transparent border-secondary text-light" id="salary" name="salary" required placeholder="50000" />
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="pf" class="form-label">PF</label>
+                <select class="form-select bg-transparent text-light" id="pf" name="pf">
+                  <option class="text-dark" value="no">No</option>
+                  <option class="text-dark" value="yes">Yes</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="esi" class="form-label">ESI</label>
+                <select class="form-select bg-transparent text-light" id="esi" name="esi">
+                  <option class="text-dark" value="no">No</option>
+                  <option class="text-dark" value="yes">Yes</option>
+                </select>
+              </div>
+
+              <div class="col-12 mt-4 text-end">
+                <button type="submit" class="btn btn-secondary rounded-pill px-5" style="background: linear-gradient(135deg, var(--secondary), var(--primary)); border: none; color: white;">Save Teacher</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 fade-in-up stagger-2">
+    <div class="col-12">
+      <div class="card border-0">
+        <div class="card-header bg-transparent d-flex justify-content-between align-items-center pt-4 pb-3">
+          <h5 class="mb-0 fw-bold">Current Teachers Database</h5>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-secondary rounded-circle px-2" onclick="document.getElementById('teacherTable').scrollBy({left: -300, behavior: 'smooth'});" title="Scroll Left">
+              &#8592;
+            </button>
+            <button class="btn btn-sm btn-outline-secondary rounded-circle px-2" onclick="document.getElementById('teacherTable').scrollBy({left: 300, behavior: 'smooth'});" title="Scroll Right">
+              &#8594;
+            </button>
+            <a href="{{ url_for('export_teachers') }}" class="btn btn-sm btn-outline-primary rounded-pill ms-2">
+              <i class="bi bi-download me-1"></i> Export CSV
+            </a>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive border-0 border-top" id="teacherTable">
+            <table class="table align-middle mb-0 text-nowrap">
+              <thead>
+                <tr>
+                  <th class="ps-4">#</th>
+                  <th>Name</th>
+                  <th>Department</th>
+                  <th>Qualification</th>
+                  <th>Subject</th>
+                  <th>Exp (Yrs).</th>
+                  <th class="text-end">Salary (₹)</th>
+                  <th class="text-center">PF</th>
+                  <th class="text-center">ESI</th>
+                  <th>Created At</th>
+                  <th class="text-center pe-4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if teachers %}
+                  {% for t in teachers %}
+                    <tr>
+                      <td class="ps-4 text-muted">{{ loop.index }}</td>
+                      <td class="text-info fw-semibold">{{ t.teacher_name }}</td>
+                      <td><span class="badge bg-secondary-soft text-secondary border border-secondary border-opacity-25">{{ t.department.department_name if t.department else '-' }}</span></td>
+                      <td>{{ t.qualification or '-' }}</td>
+                      <td>{{ t.subject or '-' }}</td>
+                      <td>{{ t.experience or '-' }}</td>
+                      <td class="text-end text-primary fw-bold">₹{{ "%.2f"|format(t.salary) }}</td>
+                      <td class="text-center">
+                        {% if t.pf %}
+                          <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Yes</span>
+                        {% else %}
+                          <span class="badge bg-secondary bg-opacity-10 text-muted border border-secondary border-opacity-25 px-2 py-1">No</span>
+                        {% endif %}
+                      </td>
+                      <td class="text-center">
+                        {% if t.esi %}
+                          <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Yes</span>
+                        {% else %}
+                          <span class="badge bg-secondary bg-opacity-10 text-muted border border-secondary border-opacity-25 px-2 py-1">No</span>
+                        {% endif %}
+                      </td>
+                      <td class="text-muted small">{{ t.created_at.strftime('%Y-%m-%d %H:%M') if t.created_at else '-' }}</td>
+                      <td class="text-center pe-4">
+                        <form action="{{ url_for('delete_teacher', teacher_id=t.teacher_id) }}" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this teacher?');">
+                          <button type="submit" class="btn btn-sm btn-outline-danger px-3 rounded-pill">Delete</button>
+                        </form>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td colspan="11" class="text-muted text-center py-5">No teachers found. Use the form above to add an entry.</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

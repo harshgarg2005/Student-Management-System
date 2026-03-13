@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4 fade-in-up">
+    <h1 class="page-title mb-0">Student Data</h1>
+  </div>
+
+  <div class="row g-4 mb-4 fade-in-up stagger-1">
+    <div class="col-12">
+      <div class="card border-0">
+        <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 fw-bold">Add Student</h5>
+          <span class="badge bg-primary-soft text-primary rounded-pill"><i class="bi bi-person-plus-fill me-1"></i> New Entry</span>
+        </div>
+        <div class="card-body p-4">
+          <form action="{{ url_for('add_student') }}" method="post">
+            <div class="row g-4">
+              <div class="col-md-4">
+                <label for="name" class="form-label">Name *</label>
+                <input type="text" class="form-control bg-transparent" id="name" name="name" required placeholder="John Doe" />
+              </div>
+              <div class="col-md-4">
+                <label for="roll_no" class="form-label">Roll No *</label>
+                <input type="text" class="form-control bg-transparent" id="roll_no" name="roll_no" required placeholder="123456" />
+              </div>
+              <div class="col-md-4">
+                <label for="enroll_no" class="form-label">Enroll No</label>
+                <input type="text" class="form-control bg-transparent" id="enroll_no" name="enroll_no" placeholder="Optional" />
+              </div>
+              
+              <div class="col-md-4">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control bg-transparent" id="address" name="address" placeholder="123 Main St" />
+              </div>
+              <div class="col-md-4">
+                <label for="pincode" class="form-label">Pincode</label>
+                <input type="text" class="form-control bg-transparent" id="pincode" name="pincode" placeholder="Postal Code" />
+              </div>
+              <div class="col-md-4">
+                <label for="dob" class="form-label">DOB</label>
+                <input type="date" class="form-control bg-transparent text-light" id="dob" name="dob" />
+              </div>
+
+              <div class="col-md-4">
+                <label for="father_name" class="form-label">Father Name</label>
+                <input type="text" class="form-control bg-transparent" id="father_name" name="father_name" />
+              </div>
+              <div class="col-md-4">
+                <label for="mother_name" class="form-label">Mother Name</label>
+                <input type="text" class="form-control bg-transparent" id="mother_name" name="mother_name" />
+              </div>
+              <div class="col-md-4">
+                <label for="father_occupation" class="form-label">Father Occupation</label>
+                <select class="form-select bg-transparent text-light" id="father_occupation" name="father_occupation" onchange="toggleOccupation(this)">
+                  <option class="text-dark" value="">Select</option>
+                  <option class="text-dark" value="Business">Business</option>
+                  <option class="text-dark" value="Government Service">Government Service</option>
+                  <option class="text-dark" value="Private Sector">Private Sector</option>
+                  <option class="text-dark" value="Self-Employed">Self-Employed</option>
+                  <option class="text-dark" value="Agriculture">Agriculture</option>
+                  <option class="text-dark" value="Other">Other</option>
+                </select>
+                <input type="text" class="form-control bg-transparent mt-2" id="father_occupation_other" name="father_occupation_other" placeholder="Please specify occupation" style="display: none;" />
+              </div>
+
+              <div class="col-md-4">
+                <label for="total_fees" class="form-label">Total Fees *</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent border-secondary text-muted">₹</span>
+                  <input type="number" step="0.01" class="form-control bg-transparent border-secondary text-light" id="total_fees" name="total_fees" required />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="father_salary" class="form-label">Father Salary</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent border-secondary text-muted">₹</span>
+                  <input type="number" step="0.01" class="form-control bg-transparent border-secondary text-light" id="father_salary" name="father_salary" />
+                </div>
+              </div>
+              <div class="col-12 mt-4 text-end">
+                <button type="submit" class="btn btn-primary rounded-pill px-5">Save Student</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-5 fade-in-up stagger-2">
+    <div class="col-12">
+      <div class="card border-0">
+        <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 fw-bold">Record a Payment</h5>
+          <span class="badge bg-success text-success bg-opacity-10 rounded-pill"><i class="bi bi-wallet2 me-1"></i> Quick Pay</span>
+        </div>
+        <div class="card-body p-4">
+          <form action="{{ url_for('add_payment') }}" method="post">
+            <div class="row g-3 align-items-end">
+              <div class="col-md-4">
+                <label for="pay_roll_no" class="form-label">Student Roll No *</label>
+                <input type="text" class="form-control bg-transparent" id="pay_roll_no" name="roll_no" required placeholder="e.g. 894546" />
+              </div>
+              <div class="col-md-3">
+                <label for="paid_amount" class="form-label">Amount Paid *</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent border-secondary text-muted">₹</span>
+                  <input type="number" step="0.01" class="form-control bg-transparent border-secondary text-light" id="paid_amount" name="paid_amount" required placeholder="45000" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="payment_date" class="form-label">Date</label>
+                <input type="date" class="form-control bg-transparent text-light" id="payment_date" name="payment_date" />
+              </div>
+              <div class="col-md-2 mt-4 mt-md-0 text-end">
+                <button type="submit" class="btn btn-success rounded-pill px-4 w-100 shadow-sm">Process</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 fade-in-up stagger-3">
+    <div class="col-12">
+      <div class="card border-0">
+        <div class="card-header bg-transparent d-flex justify-content-between align-items-center pt-4 pb-3">
+          <h5 class="mb-0 fw-bold">Current Students Database</h5>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-secondary rounded-circle px-2" onclick="document.getElementById('studentTable').scrollBy({left: -300, behavior: 'smooth'});" title="Scroll Left">
+              &#8592;
+            </button>
+            <button class="btn btn-sm btn-outline-secondary rounded-circle px-2" onclick="document.getElementById('studentTable').scrollBy({left: 300, behavior: 'smooth'});" title="Scroll Right">
+              &#8594;
+            </button>
+            <a href="{{ url_for('export_students') }}" class="btn btn-sm btn-outline-primary rounded-pill ms-2">
+              <i class="bi bi-download me-1"></i> Export CSV
+            </a>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive border-0 border-top" id="studentTable">
+            <table class="table align-middle mb-0 text-nowrap">
+              <thead>
+                <tr>
+                  <th class="ps-4">#</th>
+                  <th>Name</th>
+                  <th>Roll No</th>
+                  <th>Enroll No</th>
+                  <th>DOB</th>
+                  <th>Address</th>
+                  <th>Pincode</th>
+                  <th>Father</th>
+                  <th>Mother</th>
+                  <th>Father Occ.</th>
+                  <th class="text-end">Father Salary (₹)</th>
+                  <th class="text-end">Total Fees (₹)</th>
+                  <th class="text-end text-success">Paid Fees (₹)</th>
+                  <th class="text-end text-warning">Balance (₹)</th>
+                  <th>Created</th>
+                  <th class="text-center pe-4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if students %}
+                  {% for s in students %}
+                    <tr>
+                      <td class="ps-4 text-muted">{{ loop.index }}</td>
+                      <td class="text-info fw-semibold">{{ s.name }}</td>
+                      <td><span class="badge bg-secondary-soft text-secondary border border-secondary border-opacity-25">{{ s.roll_no }}</span></td>
+                      <td>{{ s.enroll_no or '-' }}</td>
+                      <td>{{ s.dob.strftime('%Y-%m-%d') if s.dob else '-' }}</td>
+                      <td>{{ s.address or '-' }}</td>
+                      <td>{{ s.pincode or '-' }}</td>
+                      <td>{{ s.father_name or '-' }}</td>
+                      <td>{{ s.mother_name or '-' }}</td>
+                      <td>{{ s.father_occupation or '-' }}</td>
+                      <td class="text-end fw-medium">{{ "%.2f"|format(s.father_salary or 0) }}</td>
+                      <td class="text-end fw-medium">{{ "%.2f"|format(s.total_fees or 0) }}</td>
+                      <td class="text-end text-success fw-bold">{{ "%.2f"|format(s.total_paid or 0) }}</td>
+                      <td class="text-end text-warning fw-bold">{{ "%.2f"|format((s.total_fees or 0) - (s.total_paid or 0)) }}</td>
+                      <td class="text-muted small">{{ s.created_at.strftime('%Y-%m-%d %H:%M') if s.created_at else '-' }}</td>
+                      <td class="text-center pe-4">
+                        <form action="{{ url_for('delete_student', student_id=s.student_id) }}" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                          <button type="submit" class="btn btn-sm btn-outline-danger px-3 rounded-pill">Delete</button>
+                        </form>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td colspan="16" class="text-muted text-center py-5">No students found. Use the form above to add an entry.</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function toggleOccupation(selectElement) {
+  const otherInput = document.getElementById('father_occupation_other');
+  if (selectElement.value === 'Other') {
+    otherInput.style.display = 'block';
+    otherInput.required = true;
+  } else {
+    otherInput.style.display = 'none';
+    otherInput.required = false;
+    otherInput.value = '';
+  }
+}
+</script>
+{% endblock %}
