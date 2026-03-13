@@ -1,36 +1,58 @@
-# Student Management System - Backend Setup
+# 🎓 Student Management System
 
-This project is a Flask-based Student Management System backed by a MySQL database.
+A web-based Student Management System built using **Python Flask** and **MySQL**.  
+This system helps manage students, teachers, and academic data efficiently.
 
-## 1. Create and configure your environment
+---
 
-1. Create a virtual environment (recommended) and activate it.
-2. Install dependencies:
+## 🚀 Features
+
+- Student Registration
+- Teacher Management
+- Login Authentication
+- Dashboard
+- Database Integration
+- Analytics with Power BI
+
+---
+
+## 🛠️ Tech Stack
+
+Backend:
+- Python
+- Flask
+
+Database:
+- MySQL
+
+Frontend:
+- HTML
+- CSS
+- JavaScript
+
+Tools:
+- Power BI
+- GitHub
+
+---
+
+## 📂 Project Structure
+
+Student-Management-System
+│
+├── app.py
+├── models.py
+├── config.py
+├── requirements.txt
+├── templates/
+├── static/
+├── .env.example
+
+---
+
+## ⚙️ Installation
+
+Clone the repository
 
 ```bash
-pip install -r requirements.txt
-```
-
-3. Copy the example environment file and fill in the values:
-
-```bash
-copy .env.example .env  # On Windows PowerShell / CMD
-```
-
-Edit `.env` to match your local MySQL configuration (user, password, host, port, and database name).
-
-## 2. Initialize the MySQL database
-
-With your `.env` file configured and MySQL server running, run:
-
-```bash
-python init_db.py
-```
-
-This will connect to the MySQL server and ensure that the configured database exists. Table creation will be handled later via SQLAlchemy models in the Flask app.
-
-## 3. Next steps
-
-- Implement the Flask app (`app.py`) using the `Config` class from `config.py` for `SQLALCHEMY_DATABASE_URI` and other settings.
-- Define `Student`, `Teacher`, and `Feedback` models and use SQLAlchemy to create tables against the initialized database.
-
+git clone https://github.com/yourusername/student-management-system.git
