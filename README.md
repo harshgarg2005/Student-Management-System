@@ -50,9 +50,4 @@ Student-Management-System
 
 ---
 
-## ⚙️ Installation
 
-Clone the repository
-
-```bash
-git clone https://github.com/yourusername/student-management-system.git
